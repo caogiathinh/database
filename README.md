@@ -7,3 +7,5 @@ Repo này sẽ bao gồm 2 nội dụng chính: cách thức **viết câu truy 
 - installation.sqlserver-2022: Hướng dẫn cài đặt SQL Server và SSMS.
 - sample-db: Bao gồm các file tạo database mẫu và dữ liệu mẫu để thực hành. 
 - README.md: File hướng dẫn tổng quát về repo này.
+- Các file ghi chú trong quá trình học theo dạng md.
+
