@@ -39,3 +39,7 @@ SELECT N'Cao ' + N'Gia Thịnh ' + CONVERT(varchar, (YEAR(GETDATE() - 2003))) + 
 
 -- SHIFT + HOME: lên đầu dòng
 -- SHIFT + END: về cuối dòng
+
+
+-- 7. Phép nhân 2 số 
+SELECT 10 * 10 AS [10 X 10 = ]
