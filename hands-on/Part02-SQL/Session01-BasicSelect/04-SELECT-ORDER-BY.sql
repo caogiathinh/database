@@ -2,25 +2,39 @@
 
 --------------------------------------------------------------
 -- LÍ THUYẾT 
--- MỘT DB là nơi chứa data (bán hàng, thư viện, qlsv, ... ) 
--- DATA được lưu dưới dạng table, tách thành nhiều TABLE (nghệ thuật design database)
--- DÙNG LỆNH SELECT để in dữ liệu từ table, hiển thị dươi dạng table 
--- CÚ PHÁP CHUẨN: SELECT * FROM <TÊN-TABLE>
---						 * đại diện cho việc tui muốn lấy all of column
+-- CÚ PHÁP MỞ RỘNG CỦA LỆNH SELECT
+-- Ta muốn săp xép dữ liệu sort theo tiêu chí nào đó, thường là tăng dần - ASCENDING/ASC
+--																giảm dần - DESCENDING/DESC
+-- mặc định không nói gì cả là sort tăng dần
+-- A < B < C
+-- 1 < 2 < 3 
+-- ta có thể sắp xêp trên nhiều cột, logic này từ từ tính
+-- SELECT ... FROM <TÊN-TABLE> ORDER BY <TÊN-CỘT-MUỐN-SORT> <KIỂU SORT>
 
--- CÚ PHÁP MỞ RỘNG:
---					SELECT TÊN-CÁC-CỘT-MUỐN-LẤY, CÁCH-NHAU-DẤU-PHẨY FROM <TABLE>
---					SELECT CÓ THỂ DÙNG CÁC HÀM XỬ LÍ CÁC CỘT DỂ ĐỘ LẠI THÔNG TIN HIỂN THỊ
---					FROM <TÊN-TABLE>
-
--- Khi ta SELECT một vài cột từ table thì có nguy cơ dữ liệu sẽ bị trùng lại 
--- không phải ta bị sai, không phải người thiết kế table và người nhập liệu bị sai
--- do chúng ta có nhiều info đặc diểm trùng nhau/đặc điểm trùng nhau, nếu chỉ tập trung vào data này 
--- trùng nhau chắc chắn xảy ra
--- 100 triệu người dân VN được quản lí info bao gồm: ID, tên, Dob, ... tinh thành sinh sống
---													<>                     63 tỉnh
--- LỆNH SELECT HỖ TRỢ LOẠI BỎ CÁC DÒNG TRÙNG NHAU/ TRÙNG 100%
--- SELECT DISTINCT <TÊN-CÁC-CỘT> FROM <TÊN-TABLE>
 --------------------------------------------------------------
 -- THỰC HÀNH
+-- 1. In ra  danh sách nhân viên
+SELECT * FROM Employees
 
+-- 2. In ra danh sách nhân viên tăng dần theo năm sinh
+SELECT * FROM Employees ORDER BY BirthDate ASC
+SELECT * FROM Employees ORDER BY BirthDate ASC --mặc định là tăng dần
+
+-- 3. In ra ds nhân viên GIẢM DẦN theo năm sinh
+SELECT * FROM Employees ORDER BY BirthDate DESC
+
+-- 4. Tính tiền chi tiết mua hàng
+SELECT * FROM [Order Details]
+SELECT *, Quantity * UnitPrice * (1 - Discount) AS SubTotal FROM [Order Details]
+
+-- 5. Tính tiền chi tiết mua hàng, giảm dần theo số tiền
+SELECT *, Quantity * UnitPrice * (1 - Discount) AS SubTotal FROM [Order Details] 
+ORDER BY SubTotal DESC
+
+-- 6. In ra danh sách nhân viên giảm dần theo tuổi
+SELECT *, YEAR(GETDATE()) - YEAR(BirthDate) AS Age FROM Employees  
+ORDER BY Age DESC
+
+SELECT EmployeeID, FirstName, BirthDate, YEAR(GETDATE()) - YEAR(BirthDate) AS [Age]
+FROM Employees
+ORDER BY Age DESC
