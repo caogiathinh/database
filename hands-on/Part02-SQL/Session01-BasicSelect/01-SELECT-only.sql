@@ -37,3 +37,5 @@ SELECT YEAR(GETDATE()) - 2003 AS [Age]
 SELECT N'Cao ' + N'Gia Thịnh ' + CAST((YEAR(GETDATE()) - 2003) AS varchar)  + ' year old'
 SELECT N'Cao ' + N'Gia Thịnh ' + CONVERT(varchar, (YEAR(GETDATE() - 2003))) + ' year old'
 
+-- SHIFT + HOME: lên đầu dòng
+-- SHIFT + END: về cuối dòng
