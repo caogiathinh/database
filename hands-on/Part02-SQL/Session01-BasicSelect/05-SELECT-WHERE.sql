@@ -31,6 +31,6 @@
 SELECT * FROM Customers --92
 
 -- 2. In ra danh sách khách hàng đến từ Ý
-SELECT * FROM Customers WHERE Country = 'Italy'
+SELECT * FROM Customers WHERE Country = 'Italy';
 
 -- 3. 
