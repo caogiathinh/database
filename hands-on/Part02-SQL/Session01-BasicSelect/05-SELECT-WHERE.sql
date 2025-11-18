@@ -19,6 +19,18 @@
 -- > nhiều điều kiện lọc đi kèm nhau dùng thêm toán tử logic operators, AND, OR, NOT
 -- Ví dụ: WHERE City = N'Binh Dương'
 --        WHERE City = N'Tiền Giang' AND Gpa >= 8
+
+-- LỌC LIÊN QUAN TỚI GIÁ TRỊ/VALUE/CELL CHỨA GÌ, TA PHẢI QUAN TÂM ĐẾN DATA TYPES
+-- Số: nguyên/thực, ghi số ra như truyền thống 5, 10, 3.14, 9.8
+-- Chuỗi/kí tự: 'A', 'Ahihi'
+-- Ngày tháng: '2003-01-01....'
+
 --------------------------------------------------------------
 -- THỰC HÀNH
--- 1. 
+-- 1. In ra danh sách các khách hàng
+SELECT * FROM Customers --92
+
+-- 2. In ra danh sách khách hàng đến từ Ý
+SELECT * FROM Customers WHERE Country = 'Italy'
+
+-- 3. 
