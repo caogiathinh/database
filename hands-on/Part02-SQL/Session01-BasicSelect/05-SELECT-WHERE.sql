@@ -104,6 +104,9 @@ SELECT * FROM Orders WHERE (Freight >= 100 AND Freight <= 500) ORDER BY Freight 
 SELECT * FROM Orders WHERE (Freight >= 100 AND Freight <= 500) AND ShipVia = 1 --52/174/830
 
 -- 17. và không ship tới London
+
+SELECT * FROM Orders WHERE (Freight >= 100 AND Freight <= 500) AND ShipVia = 1 AND (ShipCity != 'London') --50
+
 -- RẤT CẨN THẬN KHI TRONG MỆNH ĐỀ WHERE LẠI CÓ AND VÀ OR TRỘN VỚI NHAU, TA PHẢI XÀI THÊM () 
 -- ĐỂ PHÂN TÁCH THỨ TỰ FILTER.. (SO SÁNH ANH OR KHÁC NỮA) AND (SO SÁNH KHÁC)
 
