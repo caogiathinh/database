@@ -33,8 +33,7 @@ SELECT * FROM Employees WHERE Title = 'Sales Representative' AND NOT(Region IS N
 
 -- 5. Liệt kê danh sách khách hàng đến từ Anh Pháp Mĩ, có cả thông tin số fax và region
 SELECT * FROM Customers WHERE Country IN('UK', 'USA', 'France') 
-						AND (Fax IS NOT NULL)
-						AND (Region IS NOT NULL) 
-
+								AND (Fax IS NOT NULL)
+								AND (Region IS NOT NULL) 
 
 
