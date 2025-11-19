@@ -105,9 +105,28 @@ SELECT * FROM Orders WHERE (Freight >= 100 AND Freight <= 500) AND ShipVia = 1 -
 
 -- 17. và không ship tới London
 
-SELECT * FROM Orders WHERE (Freight >= 100 AND Freight <= 500) AND ShipVia = 1 AND (ShipCity != 'London') --50
+SELECT * FROM Orders
+WHERE (Freight >= 100 AND Freight <= 500) AND ShipVia = 1 AND (ShipCity != 'London') --50
+ORDER BY Freight DESC
+
+SELECT * FROM Orders
+WHERE (Freight >= 100 AND Freight <= 500) AND ShipVia = 1 AND (ShipCity <> 'London') --50
+ORDER BY Freight DESC
+
+SELECT * FROM Orders
+WHERE (Freight >= 100 AND Freight <= 500) AND ShipVia = 1 AND NOT(ShipCity = 'London') --50
+ORDER BY Freight DESC
 
 -- RẤT CẨN THẬN KHI TRONG MỆNH ĐỀ WHERE LẠI CÓ AND VÀ OR TRỘN VỚI NHAU, TA PHẢI XÀI THÊM () 
 -- ĐỂ PHÂN TÁCH THỨ TỰ FILTER.. (SO SÁNH ANH OR KHÁC NỮA) AND (SO SÁNH KHÁC)
 
+-- 18. Liệt kê k/h đến từ Mĩ hoặc Mexico
+SELECT * FROM Customers WHERE Country = 'USA' OR Country = 'Mexico' --18
+
+-- 19. Liệt kê kh KO đến từ Mĩ hoặc Mexico
+SELECT * FROM Customers WHERE NOT(Country = 'USA' OR Country = 'Mexico') --73
+SELECT * FROM Customers WHERE Country != 'USA' AND Country != 'Mexico' --73
+
+-- 20. Liệt kê các nhân viên sinh ra trong đoạn [1960-1970]
+SELECT * FROM Employees WHERE YEAR(BirthDate) >= 1960 AND YEAR(BirthDate) <= 1970 ORDER BY BirthDate DESC
 
