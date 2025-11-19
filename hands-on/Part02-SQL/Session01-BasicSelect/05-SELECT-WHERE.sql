@@ -57,4 +57,54 @@ SELECT * FROM Employees
 -- 7. In ra thông tin của nhân viên từ năm 1950 trở lại gần đây/đổ lại
 SELECT * FROM Employees WHERE YEAR(BirthDate) >= 1960
 
--- 8. 
+-- 8. In ra thông tin nhân viên có tuổi từ 60 trở lên
+SELECT * FROM Employees WHERE (YEAR(GETDATE()) - YEAR(BirthDate)) >= 60
+SELECT (YEAR(GETDATE()) - YEAR(BirthDate)) AS Age, *
+FROM Employees WHERE (YEAR(GETDATE()) - YEAR(BirthDate)) >= 60
+
+-- 9. Những nhân viên nào ở London 
+SELECT * FROM Employees WHERE City = 'London'
+
+-- 10. Những ai không ở London
+SELECT * FROM Employees WHERE City <> 'London'
+SELECT * FROM Employees WHERE City != 'London'
+
+-- vi diệu, đảo mệnh đề
+SELECT * FROM Employees WHERE NOT(City = 'London') -- 4/9
+--SELECT * FROM Employees WHERE !(City = 'London') -- sai cú pháp, đảo mệnh đề, phép so sánh thì dùng
+
+-- 11. In ra hồ sơ nhân viên có mã số là 1
+-- đi vào ngân hàng để giao dịch, hoặc đưa số tài khoản, kèm cccd, filter theo cmnd
+SELECT * FROM Employees WHERE EmployeeID = 1 --kiểu số, hong có ' ', chơi như lập trình
+-- WHERE TRÊN KEY CHỈ RA MỘT MÀ THÔI 
+-- SELECT MÀ CÓ WHERE KEY CHỈ CÓ 1 DÒNG TRẢ VỀ, DISTINCT LÀ VÔ NGHĨA
+SELECT DISTINCT EmployeeID, City FROM Employees WHERE EmployeeID = 1 ORDER BY EmployeeID
+
+-- CÔNG THỨC FULL KHÔNG CHE CỦA SELECT
+-- SELECT ...........        FROM .....           WHERE ... GROUP BY..... HAVING ..... ORDER BY
+--       DISTINCT          1, N TABLE
+--        HÀM()
+--        NESTED QUERY/SUB QUERY
+
+-- 12. Xem thông tin bên đơn hàng 
+SELECT * FROM Orders --830
+
+-- 13. Sắp xếp giảm dần theo trọng lượng đơn
+SELECT * FROM Orders ORDER BY Freight DESC
+
+-- 14. In ra thông tin đơn hàng trọng lượng >= 500 kg
+SELECT * FROM Orders WHERE Freight >= 500 ORDER BY Freight DESC
+
+-- 15. In ra thông tin Đơn hàng sắp xếp giảm dần theo trọng lượng, trọng lượng nằm trong khoảng từ
+-- 100 đến 500
+SELECT * FROM Orders WHERE (Freight >= 100 AND Freight <= 500) ORDER BY Freight DESC --174
+
+-- 16. In ra thông tin Đơn hàng sắp xếp giảm dần theo trọng lượng, trọng lượng nằm trong khoảng từ
+-- 100 đến 500 và ship bởi công ty giao vận số 1
+SELECT * FROM Orders WHERE (Freight >= 100 AND Freight <= 500) AND ShipVia = 1 --52/174/830
+
+-- 17. và không ship tới London
+-- RẤT CẨN THẬN KHI TRONG MỆNH ĐỀ WHERE LẠI CÓ AND VÀ OR TRỘN VỚI NHAU, TA PHẢI XÀI THÊM () 
+-- ĐỂ PHÂN TÁCH THỨ TỰ FILTER.. (SO SÁNH ANH OR KHÁC NỮA) AND (SO SÁNH KHÁC)
+
+
