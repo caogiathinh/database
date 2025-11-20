@@ -39,5 +39,3 @@ SELECT * FROM Employees WHERE FirstName LIKE '____' --1
 
 -- 5. Xem danh sách các sản phẩm /món đồ đang có - Product
 SELECT * FROM Products  --77
-
--- 6. Những 
