@@ -39,3 +39,24 @@ SELECT * FROM Employees WHERE FirstName LIKE '____' --1
 
 -- 5. Xem danh sách các sản phẩm /món đồ đang có - Product
 SELECT * FROM Products  --77
+
+-- 6. Những sản phẩm nào tên bắt đầu bằng Ch
+SELECT * FROM Products WHERE ProductName LIKE 'Ch%' --6
+
+-- Những sản phẩm có cụm Ch trong tên sản phẩm
+SELECT * FROM Products WHERE ProductName LIKE '%Ch%'  --14
+-- trong tên có từ Ch, không quan tâm vị trí 
+
+-- 7. Những sản phẩm tên có 5 kí tự 
+SELECT * FROM Products WHERE ProductName LIKE '_____' --2
+
+-- 8. Những sản phẩm trong tên sp từ cuối cùng là 5 kí tự
+SELECT * FROM Products WHERE ProductName LIKE '%_____' --tên có từ 5 kí tự trở lên
+
+SELECT * FROM Products WHERE ProductName LIKE '% _____' --tên có ít nhất 2 từ
+														--từ cuối cùng có 5 kí tự
+														--VÔ TÌNH LOẠI ĐI THẰNG
+														--TÊN CHỈ CÓ ĐÚNG 5 KÍ TỰ
+														--12
+SELECT * FROM Products WHERE ProductName LIKE '% _____' OR ProductName LIKE '_____' --14
+
