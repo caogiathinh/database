@@ -71,12 +71,47 @@ SELECT * FROM Orders
 
 --BTVN
 -- 1. Liệt kê danh sách các công ty vận chuyển hàng
+SELECT * FROM Shippers
 
 -- 2. Liệt kê danh sách các đơn hàng được vận chuyển bởi công ty giao vận 
 --	  có mã số 1
+SELECT * FROM Orders WHERE ShipVia = 1 --249
+
 -- 3. Liệt kê danh sách các đơn hàng dc vận chuyển bởi công ty giao vận
 -- có tên Speedy Express
+SELECT * FROM Shippers
+SELECT * FROM Orders
+SELECT * FROM Orders 
+		 WHERE ShipVia = 
+		   				(
+							SELECT ShipperID FROM Shippers 
+											 WHERE CompanyName = 'Speedy Express'
+						)  --249
+
 -- 4. Liệt kê danh sách các đơn hàng dc vận chuyển bởi công ty giao vận
 -- có tên Speedy Express và trọng lượng từ 50 - 100 
+SELECT * FROM Orders 
+		 WHERE ShipVia = 
+		   				(
+							SELECT ShipperID FROM Shippers 
+											 WHERE CompanyName = 'Speedy Express'
+						) AND (Freight BETWEEN 50 AND 100) --50
+
 -- 5. Liệt kê các mặt hàng cùng chủng loại với mặt hàng Filo Mix
+SELECT * FROM Products 
+		 WHERE CategoryID = (
+								SELECT CategoryID FROM Products 
+												  WHERE ProductName = 'Filo Mix'
+							 ) --7
+SELECT * FROM Products 
+		 WHERE CategoryID = (
+								SELECT CategoryID FROM Products 
+												  WHERE ProductName = 'Filo Mix'
+							 ) AND ProductName != 'Filo Mix' --6
+
 -- 6. Liệt kê các nhân viên trẻ tuổi hơn nhân viên Janet
+SELECT * FROM Employees 
+	     WHERE BirthDate >= (
+								SELECT BirthDate FROM Employees 
+												 WHERE FirstName = 'Janet'
+							) AND FirstName != 'Janet'
