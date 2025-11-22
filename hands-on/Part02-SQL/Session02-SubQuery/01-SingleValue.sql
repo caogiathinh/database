@@ -102,11 +102,6 @@ SELECT * FROM Products
 		 WHERE CategoryID = (
 								SELECT CategoryID FROM Products 
 												  WHERE ProductName = 'Filo Mix'
-							 ) --7
-SELECT * FROM Products 
-		 WHERE CategoryID = (
-								SELECT CategoryID FROM Products 
-												  WHERE ProductName = 'Filo Mix'
 							 ) AND ProductName != 'Filo Mix' --6
 
 -- 6. Liệt kê các nhân viên trẻ tuổi hơn nhân viên Janet
