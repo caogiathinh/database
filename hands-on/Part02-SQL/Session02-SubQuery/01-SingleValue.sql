@@ -98,6 +98,13 @@ SELECT * FROM Orders
 						) AND (Freight BETWEEN 50 AND 100) --50
 
 -- 5. Liệt kê các mặt hàng cùng chủng loại với mặt hàng Filo Mix
+
+SELECT * FROM Products 
+		 WHERE CategoryID = (
+								SELECT CategoryID FROM Products 
+												  WHERE ProductName = 'Filo Mix'
+							 )--còn trùng lại Filo Mix
+
 SELECT * FROM Products 
 		 WHERE CategoryID = (
 								SELECT CategoryID FROM Products 
