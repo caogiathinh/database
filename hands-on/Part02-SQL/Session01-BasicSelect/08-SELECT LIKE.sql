@@ -59,4 +59,3 @@ SELECT * FROM Products WHERE ProductName LIKE '% _____' --tên có ít nhất 2 
 														--TÊN CHỈ CÓ ĐÚNG 5 KÍ TỰ
 														--12
 SELECT * FROM Products WHERE ProductName LIKE '% _____' OR ProductName LIKE '_____' --14
-
