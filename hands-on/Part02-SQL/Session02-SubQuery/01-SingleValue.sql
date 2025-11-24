@@ -79,6 +79,7 @@ SELECT * FROM Orders WHERE ShipVia = 1 --249
 
 -- 3. Liệt kê danh sách các đơn hàng dc vận chuyển bởi công ty giao vận
 -- có tên Speedy Express
+-- câu hỏi gián tiếp
 SELECT * FROM Shippers
 SELECT * FROM Orders
 SELECT * FROM Orders 
@@ -98,7 +99,6 @@ SELECT * FROM Orders
 						) AND (Freight BETWEEN 50 AND 100) --50
 
 -- 5. Liệt kê các mặt hàng cùng chủng loại với mặt hàng Filo Mix
-
 SELECT * FROM Products 
 		 WHERE CategoryID = (
 								SELECT CategoryID FROM Products 
@@ -117,3 +117,4 @@ SELECT * FROM Employees
 								SELECT BirthDate FROM Employees 
 												 WHERE FirstName = 'Janet'
 							) AND FirstName != 'Janet'
+
