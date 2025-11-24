@@ -117,4 +117,3 @@ SELECT * FROM Employees
 								SELECT BirthDate FROM Employees 
 												 WHERE FirstName = 'Janet'
 							) AND FirstName != 'Janet'
-
