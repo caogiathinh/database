@@ -33,7 +33,7 @@ INSERT INTO Num VALUES (101)
 SELECT * FROM Num WHERE NumBr > 5
 
 -- 2. In ra số lớn nhất trong 1 số đã nhập
--- SỐ LỚN NHẤT TRONG 1 ĐÁM ĐƯỢC ĐỊNH NGHĨA LÀ: MÀY LỚN HƠN CẢ ĐAM NGOẠI TRỪ MÀY
+-- SỐ LỚN NHẤT TRONG 1 ĐÁM ĐƯỢC ĐỊNH NGHĨA LÀ: MÀY LỚN HƠN CẢ ĐÁM NGOẠI TRỪ MÀY
 -- lớn hơn tất cả ngoại trừ chính mình -> mình là MAX CỦA ĐÁM
 SELECT * FROM Num WHERE NumBr = 101 --lầy
 SELECT * FROM Num WHERE NumBr >= ALL(SELECT * FROM Num)
