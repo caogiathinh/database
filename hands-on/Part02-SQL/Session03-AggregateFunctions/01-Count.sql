@@ -105,11 +105,21 @@ SELECT City, COUNT(*) AS [No employees] FROM Employees GROUP BY City
 -- 9.1. Các thành phố có bao nhiêu nhân viên
 -- 9.2. Đếm xong mỗi thành phố ta bắt đầu lọc lại kết quả sau đếm
 -- FILTER SAU ĐẾM, WHERE SAU ĐẾM, WHERE SAU KHI ĐÃ GOM NHÓM, AGGRATE THÌ GỌI LÀ HAVING
-SELECT City, COUNT(City) AS [No employees] FROM Employees GROUP BY City
-SELECT City, COUNT(*) AS [No employees] FROM Employees GROUP BY City
+SELECT 
+	City, COUNT(City) AS [No employees] 
+FROM Employees 
+GROUP BY City
 
-SELECT City, COUNT(*) AS [No employees] FROM Employees GROUP BY City 
-													   HAVING COUNT(*) >= 2
+SELECT 
+	City, COUNT(*) AS [No employees] 
+FROM Employees 
+GROUP BY City
+
+SELECT 
+	City, COUNT(*) AS [No employees] 
+FROM Employees 
+GROUP BY City 	
+HAVING COUNT(*) >= 2
 
 -- 10. Đếm số nhân viên của 2 thành phố Seattle và London
 SELECT 
@@ -160,19 +170,23 @@ WHERE ShipCountry IN('USA', 'UK', 'France') --225 cho cả 3
 GROUP BY ShipCountry
 -- hoặc có thể () OR () OR ()
 
--- 13. Đếm xem có bao nhiêu mặt hàng có trong kho
+-- 12.4. Trong 3 quốc gia Anh Pháp Mĩ quốc gia nào có từ 100 đơn hàng trở lên
 SELECT 
-	COUNT(*) AS [No Products] 
-FROM Products
+	ShipCountry, 
+	COUNT(*) AS [No Orders]
+FROM Orders 
+WHERE ShipCountry IN('USA', 'UK', 'France')
+GROUP BY ShipCountry
+HAVING COUNT(*) >= 100
 
+-- 13. Đếm xem có bao nhiêu mặt hàng có trong kho
 -- 14. Đếm xem có bao nhiêu lượt quốc gia đã mua hàng
 -- 15. Đếm xem có bao nhiêu quốc gia đã mua hàng (mỗi quốc gia đếm một lần)
 -- 16. Đếm số lượng đơn hàng của mỗi quốc gia
 -- 17. Quốc gia nào có từ 10 đơn hàng trở lên 
 -- 18. Đếm xem mỗi chủng loại hàng có bao nhiêu mặt hàng (bia rượu có 5 sản phẩm, thủy sản có 10 sản phẩm)
-
-
--- 17. Quốc gia nào có nhiều đơn hàng nhất 
--- 10. Thành phố nào có nhiều nhân viên nhất
+-- 19. Trong 3 quốc gia A P M, quốc gia nào có nhiều đơn hàng nhất
+-- 20. Quốc gia nào có nhiều đơn hàng nhất 
+-- 21. Thành phố nào có nhiều nhân viên nhất
 
 
