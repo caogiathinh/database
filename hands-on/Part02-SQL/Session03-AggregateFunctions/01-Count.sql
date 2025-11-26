@@ -188,5 +188,3 @@ HAVING COUNT(*) >= 100
 -- 19. Trong 3 quốc gia A P M, quốc gia nào có nhiều đơn hàng nhất
 -- 20. Quốc gia nào có nhiều đơn hàng nhất 
 -- 21. Thành phố nào có nhiều nhân viên nhất
-
-
