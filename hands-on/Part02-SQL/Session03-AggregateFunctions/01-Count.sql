@@ -180,11 +180,75 @@ GROUP BY ShipCountry
 HAVING COUNT(*) >= 100
 
 -- 13. Đếm xem có bao nhiêu mặt hàng có trong kho
+SELECT
+	COUNT(*) AS [No products]
+FROM Products
+
 -- 14. Đếm xem có bao nhiêu lượt quốc gia đã mua hàng
+SELECT 
+	COUNT(*) AS [No Orders]
+FROM Orders
+
 -- 15. Đếm xem có bao nhiêu quốc gia đã mua hàng (mỗi quốc gia đếm một lần)
+SELECT 
+	COUNT(DISTINCT ShipCity) AS [No Orders]
+FROM Orders --70 
+
 -- 16. Đếm số lượng đơn hàng của mỗi quốc gia
--- 17. Quốc gia nào có từ 10 đơn hàng trở lên 
+SELECT 
+	ShipCountry,
+	COUNT(*) AS [No Orders]
+FROM Orders 
+GROUP BY ShipCountry
+
+-- 17. Quốc gia nào có từ 10 đơn hàng trở lên
+SELECT 
+	ShipCountry,
+	COUNT(*) AS [No Orders]
+FROM Orders 
+GROUP BY ShipCountry
+HAVING COUNT(*) >= 10
+
 -- 18. Đếm xem mỗi chủng loại hàng có bao nhiêu mặt hàng (bia rượu có 5 sản phẩm, thủy sản có 10 sản phẩm)
+SELECT * FROM Products
+SELECT 
+	CategoryID, 
+	COUNT(*) AS [No Products]
+FROM Products
+GROUP BY CategoryID
+
 -- 19. Trong 3 quốc gia A P M, quốc gia nào có nhiều đơn hàng nhất
+SELECT
+	ShipCountry, COUNT(*) AS [No Orders]
+FROM Orders
+WHERE ShipCountry IN('USA', 'UK', 'France')
+GROUP BY ShipCountry
+HAVING COUNT(*) >= ALL(		
+						SELECT COUNT(*) 
+						FROM Orders 
+						WHERE ShipCountry IN('USA', 'UK', 'France')
+						GROUP BY ShipCountry
+						)
+
 -- 20. Quốc gia nào có nhiều đơn hàng nhất 
+SELECT
+	ShipCountry, COUNT(*) AS [No Orders]
+FROM Orders
+GROUP BY ShipCountry
+HAVING COUNT(*) >= ALL(		
+						SELECT COUNT(*) 
+						FROM Orders 
+						GROUP BY ShipCountry
+						)
+
 -- 21. Thành phố nào có nhiều nhân viên nhất
+SELECT 
+	City, COUNT(*) AS [No Employees]
+FROM Employees
+GROUP BY City 
+HAVING COUNT(*) >= ALL(
+						SELECT 
+							COUNT(*) 
+						FROM Employees
+						GROUP BY City
+					   )
