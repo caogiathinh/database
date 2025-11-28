@@ -91,3 +91,95 @@ FROM (
 		FROM Orders 
 		WHERE Freight >= (SELECT AVG(Freight) AS [AVG Freight] FROM Orders)	
 	 ) AS AVG --coi câu sql là 1 table
+
+
+--NHẮC LẠI
+--CỘT XUẤT HIỆN TRONG SELECT HÀM Ý ĐẾM THEO CỘT NÀY, CỘT PHẢI XUẤT HIỆN TRONG GROUP BY
+--TỈNH <ĐẾM CÁI GÌ ĐÓ CỦA TỈNH> -> CHIA THEO TỈNH MÀ ĐẾM
+--								-- GROUP BY TỈNH
+-- CHUYÊN NGÀNH, <ĐẾM CỦA CHUYÊN NGÀNH> -> CHIA THEO CHUYÊN NGÀNH MÀ ĐẾM
+									    -- GROUP BY CHUYÊN NGÀNH
+-- CÓ QUYỀN GROUP BY TRÊN NHIỀU CỘT
+-- MÃ CHUYÊN NGÀNH, TÊN CHUYÊN NGÀNH <SL SV> -> GROUP BY MÃ CN, TÊN CN
+
+-- ÔN TẬP THÊM 
+-- 1. In danh sách nhân viên 
+SELECT * FROM Employees
+
+-- 2. Đếm xem mỗi khu vực có bao nhiêu nhân viên
+SELECT 
+	COUNT(*) AS [No Regions]
+FROM Employees
+GROUP BY Region --4 (null), 5 (WA)
+-- 2 nhóm region, 2 cụm region: WA, NULL
+
+SELECT 
+	COUNT(Region) AS [No Regions]
+FROM Employees
+GROUP BY Region -- 2 cụm Region NULL WA
+-- 0 VÀ 5, DO NULL KHÔNG DC XEM LÀ VALUE ĐỂ ĐẾM, NHƯNG VẪN LÀ MỘT VALUE ĐỂ ĐƯỢC CHIA NHÓM
+--												NHÓM KHÔNG GIÁ TRỊ
+SELECT 
+	Region, COUNT(Region) AS [No Regions]
+FROM Employees
+GROUP BY Region --sai do đếm trên null
+
+SELECT 
+	Region, COUNT(*) AS [No Regions]
+FROM Employees
+GROUP BY Region --đúng do đếm trên dòng
+
+-- 3. Khảo sát đơn hàng
+SELECT * FROM Orders
+
+-- Mỗi quốc gia có bao nhiêu đơn hàng
+SELECT
+	ShipCountry, 
+	COUNT(*) AS [No Orders]
+FROM Orders 
+GROUP BY ShipCountry
+
+-- 4. Quốc gia nào có từ 50 đơn hàng trở lên
+SELECT
+	ShipCountry, 
+	COUNT(*) AS [No Orders]
+FROM Orders 
+GROUP BY ShipCountry
+HAVING COUNT(*) >= 50
+
+-- 5. Quốc gia nào có nhiều đơn hàng nhất
+SELECT MAX([No Orders]) FROM
+(SELECT
+	ShipCountry, 
+	COUNT(*) AS [No Orders]
+FROM Orders 
+GROUP BY ShipCountry
+) AS [CTry]
+-- lấy được max rồi
+SELECT
+	ShipCountry, 
+	COUNT(*) AS [No Orders]
+FROM Orders 
+GROUP BY ShipCountry
+HAVING COUNT(*) = (
+					SELECT MAX([No Orders]) 
+					FROM
+						(
+							SELECT
+								ShipCountry, 
+								COUNT(*) AS [No Orders]
+							FROM Orders 
+							GROUP BY ShipCountry
+						) AS [CTry]
+					)
+
+-- 6. Liệt kê các đơn hàng của khách hàng có mã số VINET
+SELECT
+	* 
+FROM Orders 
+WHERE CustomerID = 'VINET'
+
+-- 7. Khách hàng VINET đã mua bao nhiêu lần
+SELECT
+FROM Orders
+WHERE CustomerID = 'VINET'
