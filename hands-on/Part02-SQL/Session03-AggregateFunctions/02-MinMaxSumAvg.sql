@@ -180,6 +180,18 @@ FROM Orders
 WHERE CustomerID = 'VINET'
 
 -- 7. Khách hàng VINET đã mua bao nhiêu lần
-SELECT
+
+SELECT CustomerID, COUNT(*) 
 FROM Orders
-WHERE CustomerID = 'VINET'
+WHERE CustomerID = 'VINET' --ERROR
+
+SELECT CustomerID, COUNT(*)
+FROM Orders
+WHERE CustomerID = 'VINET' --CHIA THEO MÃ KH MÀ ĐẾM
+GROUP BY CustomerID
+
+-- ĐẾM XONG LOẠI ĐI CÁI THẰNG KHÔNG PHẢI LÀ VINET
+SELECT CustomerID, COUNT(*)
+FROM Orders
+GROUP BY CustomerID
+HAVING CustomerID = 'VINET'
