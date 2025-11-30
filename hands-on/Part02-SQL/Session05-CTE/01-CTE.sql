@@ -68,6 +68,7 @@ WITH OrderTotals AS(
 	GROUP BY OrderID
 )
 
+
 SELECT
 	o.OrderID,
 	o.OrderDate, 
