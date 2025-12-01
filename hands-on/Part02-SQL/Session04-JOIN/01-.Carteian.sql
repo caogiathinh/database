@@ -77,6 +77,6 @@ FROM Vndict vn CROSS JOIN Endict en
 ORDER BY en.Nmbr
 
 --tui biết rằng có cặp ghép vài được, có tương hợp trong cell nào đó, WHERE Nmbr
-SELECT * 
+SELECT vn.Nmbr, vn.VnDesc, en.EnDesc
 FROM Vndict vn, Endict en
 WHERE vn.Nmbr = en.Nmbr
