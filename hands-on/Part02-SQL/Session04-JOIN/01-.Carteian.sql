@@ -79,4 +79,10 @@ ORDER BY en.Nmbr
 --tui biết rằng có cặp ghép vài được, có tương hợp trong cell nào đó, WHERE Nmbr
 SELECT vn.Nmbr, vn.VnDesc, en.EnDesc
 FROM Vndict vn, Endict en
-WHERE vn.Nmbr = en.Nmbr
+WHERE vn.Nmbr = en.Nmbr --rút từ 3x3 = 9 xuống còn 3
+
+--ghéo có chọn lọc khi tìm tương quan giữa cột/cell để ghép -> INNER JOIN/OUTER
+--						EQUI JOIN
+--						ĐA PHẦN TƯƠNG GHÉP THEO TOÁN TỬ = 
+--						CÒN CÓ THỂ GHÉP THEO >= <= < > !=
+
