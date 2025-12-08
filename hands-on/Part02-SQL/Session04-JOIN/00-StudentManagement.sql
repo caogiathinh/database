@@ -150,4 +150,52 @@ HAVING COUNT(*) =
 						) AS t
 					)
 
--- 8. 
+-- 8. Đếm sinh viên của chuyên ngành SE
+-- phân tích: câu này không hỏi đếm các chuyên ngành
+SELECT COUNT(*) AS [No Student]
+FROM Student
+WHERE MajorID = 'SE'
+
+SELECT MajorID, COUNT(*) AS [No Student]
+FROM Student
+WHERE MajorID = 'SE'
+GROUP BY MajorID
+
+-- 9. Đếm số sinh viên của mỗi chuyên ngành
+-- Output: mã chuyên ngành, tên chuyên ngành, số lượng sinh viên
+-- phân tích: đáp án cần có info của 2 table
+--			  đếm trên 2 table
+--			  đếm trong major không có info sinh viên
+--			  đếm trong sinh viên sẽ có mã chuyên ngành
+--			  muốn có mã chuyên ngành, tên chuyên ngành, số lượng sv -> join 2 bảng ròi mới đếm
+SELECT 
+	m.MajorID, 
+	m.MajorName, 
+	COUNT(*) AS [No student]
+FROM Student s JOIN Major m
+	ON s.MajorID = m.MajorID
+GROUP BY m.MajorID, m.MajorName
+
+-- thiếu mất chuyên ngành hàn quốc
+-- câu 10 điểm
+SELECT 
+	m.MajorID, 
+	m.MajorName, 
+	COUNT(*) AS [No student]
+FROM Student s RIGHT JOIN Major m
+	ON s.MajorID = m.MajorID
+GROUP BY m.MajorID, m.MajorName --sai vì có 1 dòng hàn quốc FA, null về FA
+								--COUNT(1) CÓ 1 DÒNG FA, HQ có 1 sinh viên
+SELECT 
+	m.MajorID, 
+	m.MajorName, 
+	COUNT(s.StudentID) AS [No student]
+FROM Student s RIGHT JOIN Major m
+	ON s.MajorID = m.MajorID
+GROUP BY m.MajorID, m.MajorName --count null lại đúng trong trường hợp này
+								--vì mã sv null ứng với chuyên ngành HQ
+								--COUNT(*) CHỈ CẦN CÓ DÒNG LÀ RA SỐ 1
+								--CHÁP DÒNG CÓ NHIỀU NULL HAY KHÔNG? 
+
+								--ĐẾM CELL, CELL NULL -> 0
+--dash board: màn hình thống kê của admin website tuyển sinh
