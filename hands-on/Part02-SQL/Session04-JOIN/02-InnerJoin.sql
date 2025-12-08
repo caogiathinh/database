@@ -29,4 +29,17 @@ SELECT * FROM Endict e, Vndict v
 		 WHERE e.Nmbr = v.Nmbr
 
 SELECT * FROM Endict e, Vndict v
-		 WHERE e.Nmbr > v.Nmbr
+		 WHERE e.Nmbr > v.Nmbr --ghép có chọn lọc nhưng ko xài dấu =
+							   --mà dùng > >= < <= != 
+							   --non-equi join
+							   --vẫn không là ghép bừa bãi
+-- 2 Two 1 Một
+-- 3 Three 1 Một
+-- 3 Three 2 Hai
+
+SELECT * FROM Endict e, Vndict v
+		 WHERE e.Nmbr != v.Nmbr --thực dụng
+
+SELECT * FROM Endict e JOIN Vndict v
+		 ON e.Nmbr != v.Nmbr -- chuẩn mực
+
