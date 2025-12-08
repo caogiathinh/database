@@ -1,4 +1,4 @@
-﻿CREATE DATABASE StudentManagement
+﻿CREATE DATABASE StudentManagement`
 
 USE StudentManagement
 
@@ -96,4 +96,58 @@ FROM Student s LEFT JOIN Major m
 -- 4. Có bao nhiêu chuyên ngành??
 SELECT COUNT(*) AS [No Major]
 FROM Major
+SELECT COUNT(MajorID) AS [No Major]
+FROM Major
 
+-- chữ hoa upper_case thường là các từ khóa
+-- 5. Mỗi chuyên ngành có bao nhiêu sinh viên
+-- Output 0: Số lượng sinh viên đang theo học của từng chuyên ngành
+-- Ouput 1: Mã chuyên ngành | số lượng sinh viên đang theo học 
+-- Phân tích hỏi: hỏi sv, bao nhiêu sv, đếm sv là chắc chắn
+--				  gặp thêm từ mỗi !!!
+--				  mỗi cn có 1 con số đếm, đếm theo chuyên ngành, chia chuyên ngành theo nhóm đếm
+
+SELECT MajorID, 
+       COUNT(*) AS [No Student]
+FROM Student
+GROUP BY MajorID
+
+-- 6. Chuyên ngành nào có từ 3 sinh viên trở lên
+-- phân tích: chia chặng rồi 
+--			  đầu tiên phải đếm chuyên ngành đã, quét qua bảng 1 lần để đếm ra sinh viên
+--			  đếm xong, dợt lại kết quả, lọc thêm từ 3 sinh viên trở lên
+--			  phải đếm từng ngành rồi mới tính tiếp
+SELECT MajorID, 
+       COUNT(*) AS [No Student]
+FROM Student
+GROUP BY MajorID
+HAVING COUNT(*) >= 3
+
+-- 7. Chuyên ngành nào CÓ ÍT sinh viên nhất
+-- so sánh với ALL(Sub Query)
+SELECT MajorID, 
+       COUNT(*) AS [No Student]
+FROM Student
+GROUP BY MajorID
+HAVING COUNT(*) <= ALL(
+							SELECT COUNT(*)
+							FROM Student
+							GROUP BY MajorID
+						)
+
+-- tìm min sau đó so sánh min
+SELECT MajorID, 
+       COUNT(*) AS [No Student]
+FROM Student
+GROUP BY MajorID
+HAVING COUNT(*) =
+					(	SELECT MIN([No Student])
+						FROM(
+						SELECT MajorID, 
+							   COUNT(*) AS [No Student]
+						FROM Student
+						GROUP BY MajorID
+						) AS t
+					)
+
+-- 8. 
