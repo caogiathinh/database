@@ -47,3 +47,53 @@ INSERT INTO Student(StudentID, LastName, FirstName, MajorID) VALUES('UNK', N'Đ�
 
 SELECT * FROM Major
 SELECT * FROM Student
+
+-- 1. In ra thông tin chi tiết của sinh viên và thông tin chuyên ngành
+SELECT * FROM Student --info tắt của sinh viên kèm thông tin chuyên ngành
+SELECT * FROM Major	  --chỉ có info của chuyên ngaanh, thiếu info sinh viên
+--chắn chắn phải join, rồi lấy info đang nằm ở bảng kia ghép lại theo chiều ngang
+SELECT * FROM Student s, Major m
+		 WHERE s.MajorID = m.MajorID --dư cột MajorID
+
+SELECT s.*, m.MajorName, m.Hotline FROM Student s, Major m
+		 WHERE s.MajorID = m.MajorID
+
+SELECT s.*, m.MajorName, m.Hotline FROM Student s JOIN Major m
+		 ON s.MajorID = m.MajorID
+
+SELECT s.*, m.MajorName, m.Hotline FROM Student s INNER JOIN Major m
+		 ON s.MajorID = m.MajorID
+
+-- 2. In ra thông tin chi tiết của sinh viên có kèm info chuyên ngành, chỉ quan tâm sv SE và IA
+SELECT s.*, m.MajorName, m.Hotline 
+FROM Student s JOIN Major m
+		 ON s.MajorID = m.MajorID
+WHERE m.MajorID IN('SE', 'IA')
+
+SELECT s.*, m.MajorName, m.Hotline
+FROM Student s JOIN Major m
+		 ON s.MajorID = m.MajorID
+WHERE m.MajorID IN('SE', 'IA') --6
+
+SELECT s.*, s.MajorID, m.MajorName, m.Hotline
+FROM Student s, Major m
+WHERE s.MajorID = m.MajorID AND m.MajorID IN('SE', 'IA') --tích đề cát sau đó lọc lại dữ liệu
+
+-- 3. In ra thông tin sinh viên kèm chuyên ngành. Chuyên ngành nào chưa số sinh viên cũng in ra luôn 
+-- phân tích: căn theo sinh viên mà in, thì HÀN QUỐC tèo không xuất hiện
+SELECT s.*, m.* 
+FROM Student s RIGHT JOIN Major m
+	ON s.MajorID = m.MajorID --10
+
+SELECT s.*, m.* --thứ tự hiển thị không phải là câu chuyện 
+FROM Major m LEFT JOIN Student s
+	ON s.MajorID = m.MajorID --10
+
+SELECT s.*, m.* --thứ tự hiển thị không phải là câu chuyện 
+FROM Student s LEFT JOIN Major m
+	ON s.MajorID = m.MajorID --không có chuyên ngành korean, căn theo sinh viên
+
+-- 4. Có bao nhiêu chuyên ngành??
+SELECT COUNT(*) AS [No Major]
+FROM Major
+
