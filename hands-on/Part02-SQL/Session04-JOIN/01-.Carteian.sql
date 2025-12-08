@@ -85,4 +85,3 @@ WHERE vn.Nmbr = en.Nmbr --rút từ 3x3 = 9 xuống còn 3
 --						EQUI JOIN
 --						ĐA PHẦN TƯƠNG GHÉP THEO TOÁN TỬ = 
 --						CÒN CÓ THỂ GHÉP THEO >= <= < > !=
-

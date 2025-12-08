@@ -19,6 +19,14 @@ SELECT * FROM Vndict JOIN Endict --nhìn sâu vào talbe rồi ghép, không gh�
 
 --CÓ THỂ DÙNG THÊM WHERE ĐƯỢC HAY KHÔNG ? KHI XÀI INNER, JOIN
 --JOIN chỉ là thêm data để tính toán, gộp data lại nhiều đơn, sau đó áp dụng toàn bộ kiến thức
---SELECT đã học
+--KIẾN THỨC SELECT đã học
 
+-- THÍ NGHIỆM THÊM CHO INNERJOIN, GHÉP NGANG CÓ XEM XÉT MÔN ĐĂNG HỔ ĐỐI KHÔNG ?
+SELECT * FROM Endict
+SELECT * FROM Vndict
 
+SELECT * FROM Endict e, Vndict v
+		 WHERE e.Nmbr = v.Nmbr
+
+SELECT * FROM Endict e, Vndict v
+		 WHERE e.Nmbr > v.Nmbr
