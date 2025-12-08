@@ -1,5 +1,5 @@
-﻿USE Cartesian
-CREATE DATABASE Cartesian
+﻿CREATE DATABASE Cartesian
+USE Cartesian
 
 --DB ~~~ KHO ~~ THÙNG CHỨA DATA BÊN TRONG
 -- DATA BÊN TRONG CÁI TỦ ĐƯỢC CẤT DƯỚI DẠNG KỆ CÓ NGĂN - TABLE

@@ -20,3 +20,5 @@ SELECT * FROM Vndict JOIN Endict --nhìn sâu vào talbe rồi ghép, không gh�
 --CÓ THỂ DÙNG THÊM WHERE ĐƯỢC HAY KHÔNG ? KHI XÀI INNER, JOIN
 --JOIN chỉ là thêm data để tính toán, gộp data lại nhiều đơn, sau đó áp dụng toàn bộ kiến thức
 --SELECT đã học
+
+
