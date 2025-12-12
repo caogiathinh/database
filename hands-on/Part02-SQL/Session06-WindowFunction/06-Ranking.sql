@@ -10,29 +10,29 @@ FROM Sales.Orders
 
 -- Find the top highest sales for each product
 -- 1. TOP N analysis
-SELECT
-	* 
-FROM (
-SELECT
+SELECT * 
+FROM(
+SELECT 
 	OrderID, 
+	OrderDate, 
 	ProductID,
 	Sales, 
 	ROW_NUMBER() OVER(PARTITION BY ProductID ORDER BY Sales DESC) RankByProduct
 FROM Sales.Orders
-) t WHERE RankByProduct = 1
+)t WHERE RankByProduct = 1
 
 -- Find the lowest 2 customers based on their total sales
 -- 2. Bottom-N analysis
+-- tìm ra mỗi khách hàng mua tổng bao nhiêu tiền ? 
+SELECT * 
+FROM(
 SELECT 
-	*
-FROM (
-SELECT
 	CustomerID, 
-	SUM(Sales) AS TotalSales, 
-	ROW_NUMBER() OVER(ORDER BY SUM(Sales)) RankingCustomers
+	SUM(Sales) AS TotalSales,
+	ROW_NUMBER() OVER(ORDER BY SUM(Sales)) RankCustomer
 FROM Sales.Orders
 GROUP BY CustomerID
-) t WHERE RankingCustomers IN (1, 2)
+)t WHERE RankCustomer IN(1, 2)
 
 -- Assign unique IDs to the rows of the 'Orders Archive' table
 -- 3. Assign unique IDS
