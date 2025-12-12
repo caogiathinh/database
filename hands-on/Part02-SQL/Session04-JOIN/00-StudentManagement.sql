@@ -220,3 +220,15 @@ GROUP BY m.MajorID, m.MajorName
 -- đếm cell, cell null -> 0
 -- đếm trên mã số sinh viên thay vì đếm trên dòng sẽ bị sai
 -- dashboard màn hình thống kế của admin tuyển sinh
+
+-- chuyên ngành nào có ít sinh viên nhất - đây mới đúng
+SELECT m.MajorID, m.MajorName, COUNT(s.StudentID) AS [No Student]
+FROM Student s RIGHT JOIN Major m
+	ON s.MajorID = m.MajorID
+GROUP BY m.MajorID, m.MajorName
+HAVING COUNT(s.StudentID) <= ALL(
+									SELECT COUNT(s.StudentID) AS [No Student]
+									FROM Student s RIGHT JOIN Major m
+										ON s.MajorID = m.MajorID
+									GROUP BY m.MajorID, m.MajorName
+								)
