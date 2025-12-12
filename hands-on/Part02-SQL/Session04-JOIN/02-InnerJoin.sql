@@ -43,3 +43,6 @@ SELECT * FROM Endict e, Vndict v
 SELECT * FROM Endict e JOIN Vndict v
 		 ON e.Nmbr != v.Nmbr -- chuẩn mực
 
+SELECT * FROM Vndict
+SELECT * FROM Endict
+

@@ -81,3 +81,4 @@ SELECT * FROM Endict e FULL JOIN Vndict v
 SELECT * FROM Endict e FULL JOIN Vndict v
 		ON e.Nmbr = v.Nmbr 
 		WHERE v.Nmbr >= 3 OR e.Nmbr >= 3
+

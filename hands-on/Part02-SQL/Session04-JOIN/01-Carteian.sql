@@ -19,6 +19,9 @@ INSERT INTO Endict VALUES (1, 'One') --DML
 INSERT INTO Endict VALUES (2, 'Two')
 INSERT INTO Endict VALUES (3, 'Three')
 
+--phần này thêm cho outer join
+INSERT INTO Endict VALUES (4, 'Four')
+
 CREATE TABLE Vndict --DDL (một nhánh của SQL)
 (					--Data Definition Languages
 	Nmbr int, 
@@ -27,7 +30,7 @@ CREATE TABLE Vndict --DDL (một nhánh của SQL)
 INSERT INTO Vndict VALUES (1, N'Một') --DML
 INSERT INTO Vndict VALUES (2, N'Hai') 
 INSERT INTO Vndict VALUES (3, N'Ba') 
-
+INSERT INTO Vndict VALUES (5, N'Năm') 
 SELECT * FROM Vndict
 SELECT * FROM Endict
 
@@ -84,4 +87,4 @@ WHERE vn.Nmbr = en.Nmbr --rút từ 3x3 = 9 xuống còn 3
 --ghéo có chọn lọc khi tìm tương quan giữa cột/cell để ghép -> INNER JOIN/OUTER
 --						EQUI JOIN
 --						ĐA PHẦN TƯƠNG GHÉP THEO TOÁN TỬ = 
---						CÒN CÓ THỂ GHÉP THEO >= <= < > !=
+--						CÒN CÓ THỂ GHÉP THEO >= <= < > !=a
