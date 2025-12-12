@@ -44,3 +44,68 @@ SELECT * FROM Student
 
 -- TỪ TỪ HÃY THÊM VÀO ĐỂ XEM FULL-OUTER JOIN RA SAO
 INSERT INTO Student(StudentID, LastName, FirstName, MajorID) VALUES('UNK', N'Đặng', N'Mười', NULL);
+SELECT * FROM Student
+SELECT * FROM Major
+
+-- tùy vào triết lý thiết kế mà mình phải tách bảng
+-- mình cần nhiều thông tin, nhiều cột hơn, nên phải ghép ngang hay còn gọi là Join
+-- rất cẩn thận khi chơi với inner join
+
+-- 1. In ra thông tin chi tiết của sv kèm thông tin chuyên ngành 
+SELECT * 
+FROM Student --chỉ chứa thông tin sinh viên và mã chuyên ngành
+SELECT * 
+FROM Major --chỉ có info chuyên ngành 
+
+-- JOIN chắn chắn, lấy info đang nằm ở bên kia ghép thêm theo chiều ngang
+SELECT *
+FROM Student s, Major m 
+WHERE s.MajorID = m.MajorID --bị dư cột MajorID
+
+--chỉ SELECT những cột thực sự cần 
+SELECT s.*, m.MajorName, m.Hotline
+FROM Student s, Major m 
+WHERE s.MajorID = m.MajorID
+
+SELECT s.*, m.MajorName, m.Hotline 
+FROM Student s JOIN Major m 
+	ON s.MajorID = m.MajorID
+
+-- mất Major Korean 
+
+-- 2. In ra thông tin chi tiết của sinh viên kèm info chuyên ngành chỉ quan tâm sinh viên SE, IA
+-- phân tích: thông tin chi tiết chuyên ngành thì chắc chắn phải join 
+SELECT s.*, m.MajorName, m.Hotline 
+FROM Student s JOIN Major m 
+	ON s.MajorID = m.MajorID
+WHERE s.MajorID IN('SE', 'IA')
+
+SELECT s.*, m.MajorName, m.Hotline 
+FROM Student s JOIN Major m 
+	ON s.MajorID = m.MajorID
+WHERE s.MajorID = 'SE' OR s.MajorID = 'IA'
+
+-- ghép vô tội vạ sau đó lọc lại qua where
+SELECT s.*, m.MajorName, m.Hotline 
+FROM Student s, Major m 
+WHERE s.MajorID = m.MajorID AND (s.MajorID = 'SE' OR s.MajorID = 'IA')
+
+-- 3. In ra thông tin các sinh viên kèm chuyên ngành. Chuyên ngành nào chưa có sinh viên cũng phải in ra
+-- phân tích nếu căn theo sinh viên mà in, thì Hàn Quốc không xuất hiện
+-- việc đúng ở đây là căn theo chuyên ngành mà đếm 
+
+SELECT s.*, m.MajorName, m.Hotline 
+FROM Student s RIGHT JOIN Major m 
+	ON s.MajorID = m.MajorID
+
+SELECT s.*, m.* 
+FROM Student s RIGHT JOIN Major m 
+	ON s.MajorID = m.MajorID
+
+SELECT s.*, m.* 
+FROM Major m LEFT JOIN Student s 
+	ON s.MajorID = m.MajorID
+
+-- thứ tự table đặt trong mệnh đề FROM để OUTER JOIN cực kì quan trọng
+-- lấy bên nào làm gốc 
+
