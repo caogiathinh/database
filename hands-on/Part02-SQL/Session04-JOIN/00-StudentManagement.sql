@@ -215,6 +215,8 @@ SELECT m.MajorID, m.MajorName, COUNT(s.StudentID) AS [No Student]
 FROM Student s RIGHT JOIN Major m
 	ON s.MajorID = m.MajorID
 GROUP BY m.MajorID, m.MajorName
-
+-- count null lại đúng trong trường hợp này vì mã sinh viên null ứng với chuyên ngành hàn quốc
+-- count(*) chi cần có dòng là ra số 1, chấp dòng có nhiều null hay không
+-- đếm cell, cell null -> 0
 -- đếm trên mã số sinh viên thay vì đếm trên dòng sẽ bị sai
 -- dashboard màn hình thống kế của admin tuyển sinh
