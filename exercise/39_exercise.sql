@@ -3,23 +3,97 @@
  
 --1. In ra thông tin các sản phẩm (nhãn hàng/mặt hàng) có trong hệ thống
 --- Output 1: mã sản phẩm, tên sản phẩm, mã nhà cung cấp, mã chủng loại, đơn giá, số lượng trong kho 
---- Output 2: mã sản phẩm, tên sản phẩm, mã nhà cung cấp, tên nhà cung cấp, xuất xứ nhà cung cấp (quốc gia)
---- Output 3: mã sản phẩm, tên sản phẩm, mã chủng loại, tên chủng loại
---- Output 4: mã sản phẩm, tên sản phẩm, mã chủng loại, tên chủng loại, mã nhà cung cấp, tên nhà cung cấp, xuất xứ nhà cung cấp
+SELECT 
+    ProductID, 
+    ProductName, 
+    SupplierID, 
+    CategoryID, 
+    UnitPrice, 
+    UnitsInStock 
+FROM Products
 
+--- Output 2: mã sản phẩm, tên sản phẩm, mã nhà cung cấp, tên nhà cung cấp, xuất xứ nhà cung cấp (quốc gia)
+SELECT 
+    p.ProductID, 
+    p.ProductName, 
+    s.SupplierID,  
+    s.CompanyName, 
+    s.Country
+FROM Products p JOIN Suppliers s
+    ON p.SupplierID = s.SupplierID
+
+--- Output 3: mã sản phẩm, tên sản phẩm, mã chủng loại, tên chủng loại
+SELECT 
+    p.ProductID,
+    p.ProductName,
+    c.CategoryID,
+    c.CategoryName
+FROM Products p JOIN Categories c
+    ON p.CategoryID = c.CategoryID
+
+--- Output 4: mã sản phẩm, tên sản phẩm, mã chủng loại, tên chủng loại, mã nhà cung cấp, tên nhà cung cấp, xuất xứ nhà cung cấp
+SELECT 
+    p.ProductID,
+    p.ProductName,
+    c.CategoryID,
+    c.CategoryName,
+    s.SupplierID,
+    s.CompanyName
+FROM Categories c JOIN Products p 
+    ON c.CategoryID = P.CategoryID
+    JOIN Suppliers s ON s.SupplierID = p.SupplierID
+    
 --2. In ra thông tin các sản phẩm được cung cấp bởi nhà cung cấp đến từ Mỹ
 --- Output 1: mã sản phẩm, tên sản phẩm, mã nhà cung cấp, tên nhà cung cấp, quốc gia, đơn giá, số lượng trong kho 
+SELECT p.ProductID, 
+       p.ProductName, 
+       s.SupplierID, 
+       s.CompanyName, 
+       s.Country, 
+       p.UnitPrice, 
+       p.UnitsInStock
+FROM Products p JOIN Suppliers s 
+    ON p.SupplierID = s.SupplierID
+
 --- Output 2: mã sản phẩm, tên sản phẩm, mã nhà cung cấp, tên nhà cung cấp, đơn giá, số lượng trong kho, mã chủng loại, tên chủng loại 
+SELECT p.ProductID, 
+       p.ProductName, 
+       s.SupplierID, 
+       s.CompanyName, 
+       p.UnitPrice, 
+       p.UnitsInStock, 
+       c.CategoryID,
+       c.CategoryName
+FROM Categories c JOIN Products p
+    ON c.CategoryID = p.CategoryID
+    JOIN Suppliers s ON p.SupplierID = s.SupplierID
 
 --3. In ra thông tin các sản phẩm được cung cấp bởi nhà cung cấp đến từ Anh, Pháp, Mỹ
 --- Output: mã sản phẩm, tên sản phẩm, mã nhà cung cấp, tên nhà cung cấp, quốc gia, đơn giá, số lượng trong kho 
+SELECT p.ProductID, 
+       p.ProductName, 
+       s.SupplierID, 
+       s.CompanyName, 
+       p.UnitPrice, 
+       p.UnitsInStock
+FROM Products p JOIN Suppliers s ON p.SupplierID = s.SupplierID
+WHERE s.Country IN('France', 'USA', 'UK')
 
 --4. Có bao nhiêu nhà cung cấp?
+SELECT COUNT(*) AS [No Supliers] FROM Suppliers
 
---5. Có bao nhiêu nhà cung cấp đến từ Mỹ
+--5. Có bao nhiêu nhà cung cấp đến từ Mỹ ? 
+SELECT COUNT(*) AS [No Supliers] FROM Suppliers s
+WHERE s.Country = 'USA'
 
 --6. Nhà cung cấp Exotic Liquids cung cấp những sản phẩm nào
 --- Output 1: mã sản phẩm, tên sản phẩm, đơn giá, số lượng trong kho
+-- sử dụng join
+SELECT p.ProductID, p.ProductName, p.UnitPrice, p.UnitsInStock
+FROM Suppliers s JOIN Products p 
+    ON s.SupplierID = p.SupplierID
+WHERE s.CompanyName = 'Exotic Liquids'
+
 --- Output 2: mã sản phẩm, tên sản phẩm, mã nhóm hàng, tên nhóm hàng
 --- Output 3: mã nhà cung cấp, tên nhà cung cấp, mã sản phẩm, tên sản phẩm, mã nhóm hàng, tên nhóm hàng
  
