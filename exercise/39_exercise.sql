@@ -95,79 +95,252 @@ FROM Suppliers s JOIN Products p
 WHERE s.CompanyName = 'Exotic Liquids'
 
 --- Output 2: mã sản phẩm, tên sản phẩm, mã nhóm hàng, tên nhóm hàng
+SELECT p.ProductID, p.ProductName, c.CategoryID, c.CategoryName
+FROM Suppliers s JOIN Products p 
+    ON s.SupplierID = p.SupplierID JOIN 
+    Categories c ON P.CategoryID = c.CategoryID
+WHERE s.CompanyName = 'Exotic Liquids'
+
 --- Output 3: mã nhà cung cấp, tên nhà cung cấp, mã sản phẩm, tên sản phẩm, mã nhóm hàng, tên nhóm hàng
- 
+SELECT s.SupplierID, s.CompanyName, p.ProductID, p.ProductName, c.CategoryID, c.CategoryName
+FROM Suppliers s JOIN Products p 
+    ON s.SupplierID = p.SupplierID JOIN 
+    Categories c ON P.CategoryID = c.CategoryID
+WHERE s.CompanyName = 'Exotic Liquids' 
+
 --7. Mỗi nhà cung cấp cung cấp bao nhiêu mặt hàng (nhãn hàng)
 --- Output 1: mã nhà cung cấp, số lượng mặt hàng
+SELECT SupplierID, COUNT(*) AS [No Products]
+FROM Products 
+GROUP BY SupplierID
 --- Output 2: mã nhà cung cấp, tên nhà cung cấp, số lượng mặt hàng
+SELECT s.SupplierID,  s.CompanyName, COUNT(*) AS [No Products]
+FROM Suppliers s JOIN Products p
+    ON s.SupplierID = p.SupplierID
+GROUP BY s.SupplierID,  s.CompanyName
 
 --8. Nhà cung cấp Exotic Liquids cung cấp bao nhiêu nhãn hàng?
 --- Output: mã nhà cung cấp, tên nhà cung cấp, số lượng mặt hàng
+SELECT s.SupplierID, s.CompanyName, COUNT(*) AS [No ]
+FROM Suppliers s JOIN Products p
+    ON s.SupplierID = p.SupplierID
+    JOIN Categories c ON p.CategoryID = c.CategoryID
+WHERE s.CompanyName = 'Exotic Liquids'
+GROUP BY s.SupplierID, s.CompanyName
 
 --9. Nhà cung cấp nào cung cấp nhiều nhãn hàng nhất?
 --- Output: mã nhà cung cấp, tên nhà cung cấp, số lượng nhãn hàng
+SELECT s.SupplierID,  s.CompanyName, COUNT(*) AS [No Products]
+FROM Suppliers s JOIN Products p
+    ON s.SupplierID = p.SupplierID
+GROUP BY s.SupplierID,  s.CompanyName
+HAVING COUNT(*) >= ALL(
+                        SELECT COUNT(*) AS [No Products]
+                        FROM Suppliers s JOIN Products p
+                            ON s.SupplierID = p.SupplierID
+                        GROUP BY s.SupplierID,  s.CompanyName
+                        
+                        ) 
 
 --10. Liệt kê các nhà cung cấp cung cấp từ 3 nhãn hàng trở lên
 --- Output: mã nhà cung cấp, tên nhà cung cấp, số lượng nhãn hàng
+SELECT s.SupplierID,  s.CompanyName, COUNT(*) AS [No Products]
+FROM Suppliers s JOIN Products p
+    ON s.SupplierID = p.SupplierID
+GROUP BY s.SupplierID,  s.CompanyName
+HAVING COUNT(*) >= 3
 
 --11. Có bao nhiêu nhóm hàng/chủng loại hàng
+SELECT COUNT(*) AS [No categories] FROM Categories
 
 --12. In ra thông tin các sản phẩm (mặt hàng) kèm thông tin nhóm hàng
 --- Output: mã nhóm hàng, tên nhóm hàng, mã sản phẩm, tên sản phẩm
+SELECT c.CategoryID, c.CategoryName, p.ProductID, p.ProductName
+FROM Categories c JOIN Products p
+    ON c.CategoryID = p.CategoryID
 
 --13. Liệt kê các sản phẩm thuộc nhóm hàng Seafood
 --- Output 1: mã sản phẩm, tên sản phẩm
+SELECT p.ProductID, p.ProductName
+FROM Products p JOIN Categories c 
+    ON p.CategoryID = c.CategoryID
+WHERE c.CategoryName = 'Seafood'
+
 --- Output 2: mã sản phẩm, tên sản phẩm, mã nhóm hàng, tên nhóm hàng
+SELECT p.ProductID, p.ProductName, c.CategoryID, c.CategoryName
+FROM Products p JOIN Categories c 
+    ON p.CategoryID = c.CategoryID
+WHERE c.CategoryName = 'Seafood'
 
 --14. Liệt kê các sản phẩm thuộc nhóm hàng Seafood và Beverages, sắp xếp theo nhóm hàng
 --- Output 1: mã sản phẩm, tên sản phẩm
+SELECT p.ProductID, p.ProductName
+FROM Products p JOIN Categories c 
+    ON p.CategoryID = c.CategoryID
+WHERE c.CategoryName IN('Seafood', 'Beverages')
+ORDER BY c.CategoryName
 --- Output 2: mã sản phẩm, tên sản phẩm, mã nhóm hàng, tên nhóm hàng
+SELECT p.ProductID, p.ProductName, c.CategoryID, c.CategoryName
+FROM Products p JOIN Categories c 
+    ON p.CategoryID = c.CategoryID
+WHERE c.CategoryName IN('Seafood', 'Beverages')
+ORDER BY c.CategoryName
 
 --15. Mỗi nhóm hàng có bao nhiêu nhãn hàng/mặt hàng
---- Output 1: mã nhóm hàng số lượng nhãn hàng 
+--- Output 1: mã nhóm hàng, số lượng nhãn hàng 
+SELECT c.CategoryID, COUNT(*) AS [No products]
+FROM Categories c JOIN Products p 
+    ON c.CategoryID = p.CategoryID
+GROUP BY c.CategoryID
+
 --- Output 2: mã nhóm hàng, tên nhóm hàng, số lượng nhãn hàng 
+SELECT c.CategoryID, c.CategoryName, COUNT(*) AS [No products]
+FROM Categories c JOIN Products p 
+    ON c.CategoryID = p.CategoryID
+GROUP BY c.CategoryID, c.CategoryName
 
 --16. Nhóm hàng nào có nhiều nhãn hàng/mặt hàng nhất
 --- Output: mã nhóm hàng, tên nhóm hàng, số lượng nhãn hàng 
+SELECT c.CategoryID, c.CategoryName, COUNT(*) AS [No products]
+FROM Categories c JOIN Products p 
+    ON c.CategoryID = p.CategoryID
+GROUP BY c.CategoryID, c.CategoryName
+HAVING COUNT(*) >= ALL(
+                        SELECT COUNT(*) AS [No products]
+                        FROM Categories c JOIN Products p 
+                            ON c.CategoryID = p.CategoryID
+                        GROUP BY c.CategoryID, c.CategoryName
+                      )
 
 --17. Nhóm hàng nào có từ 10 nhãn hàng/mặt trở lên
 --- Output: mã nhóm hàng, tên nhóm hàng, số lượng nhãn hàng 
+SELECT c.CategoryID, c.CategoryName, COUNT(*) AS [No products]
+FROM Categories c JOIN Products p 
+    ON c.CategoryID = p.CategoryID
+GROUP BY c.CategoryID, c.CategoryName
+HAVING COUNT(*) >= 10
 
 --18. In ra số lượng nhãn hàng/mặt hàng của 2 nhóm hàng Seafood và Beverages 
 --- Output: mã nhóm hàng, tên nhóm hàng, số lượng nhãn hàng
+SELECT c.CategoryID, c.CategoryName, COUNT(*) AS [No products]
+FROM Categories c JOIN Products p 
+    ON c.CategoryID = p.CategoryID
+WHERE c.CategoryName IN('Seafood', 'Beverages')
+GROUP BY c.CategoryID, c.CategoryName
 
 --19. In ra tất cả các đơn hàng
 --- Output 1: Mã đơn hàng, mã khách hàng, mã nhân viên bán hàng, ngày đặt hàng, gửi tới quốc gia nào
---- Output 2: Mã đơn hàng, mã khách hàng, tên khách hàng, mã nhân viên bán hàng, tên nhân viên bán hàng, ngày đặt hàng, gửi tới quốc gia nào
---- Output 3: Mã đơn hàng, mã khách hàng, tên khách hàng, mã nhân viên bán hàng, tên nhân viên bán hàng, ngày đặt hàng, mã công ty vận chuyển, tên công ty vận chuyển, gửi tới quốc gia nào
+SELECT o.OrderID, o.CustomerID, o.EmployeeID, o.OrderDate, o.ShipCountry
+FROM Orders o JOIN Employees e 
+    ON o.EmployeeID = e.EmployeeID
 
+SELECT * FROM Customers
+SELECT * FROM Orders
+--- Output 2: Mã đơn hàng, mã khách hàng, tên khách hàng, mã nhân viên bán hàng, tên nhân viên bán hàng, ngày đặt hàng, gửi tới quốc gia nào
+SELECT o.OrderID, o.CustomerID, c.ContactName, o.EmployeeID, o.OrderDate, o.ShipCountry
+FROM Employees e JOIN Orders o 
+    ON o.EmployeeID = e.EmployeeID 
+    JOIN Customers c ON o.CustomerID = c.CustomerID
+--- Output 3: Mã đơn hàng, mã khách hàng, tên khách hàng, mã nhân viên bán hàng, tên nhân viên bán hàng, ngày đặt hàng, mã công ty vận chuyển, tên công ty vận chuyển, gửi tới quốc gia nào
+SELECT o.OrderID, o.CustomerID, c.ContactName, o.EmployeeID, o.OrderDate, o.ShipVia, o.ShipCountry
+FROM Employees e JOIN Orders o 
+    ON o.EmployeeID = e.EmployeeID 
+    JOIN Customers c ON o.CustomerID = c.CustomerID
+   
 --20. In ra các đơn hàng gửi tới Mỹ
 --- Output 1: Mã đơn hàng, mã khách hàng, tên khách hàng, mã nhân viên bán hàng, ngày đặt hàng, gửi tới quốc gia nào
+SELECT o.OrderID, o.CustomerID, o.EmployeeID, o.OrderDate, o.ShipCountry
+FROM Customers c JOIN Orders o 
+    ON  c.CustomerID = o.CustomerID
+WHERE ShipCountry = 'USA'
+
 --- Output 2: Mã đơn hàng, mã khách hàng, tên khách hàng, mã nhân viên bán hàng, tên nhân viên bán hàng, ngày đặt hàng, gửi tới quốc gia nào
+SELECT o.OrderID, c.CustomerID, c.ContactName, e.EmployeeID, e.FirstName ,o.OrderDate, o.ShipCountry
+FROM Customers c JOIN Orders o 
+    ON c.CustomerID = o.CustomerID
+    JOIN Employees e ON o.EmployeeID = e.EmployeeID
 
 --21. In ra các đơn hàng gửi tới Anh, Pháp, Mỹ
 --- Output 1: Mã đơn hàng, mã khách hàng, tên khách hàng, mã nhân viên bán hàng, ngày đặt hàng, gửi tới quốc gia nào
+SELECT o.OrderID, o.CustomerID, o.EmployeeID, o.OrderDate, o.ShipCountry
+FROM Customers c JOIN Orders o 
+    ON  c.CustomerID = o.CustomerID
+WHERE ShipCountry IN('USA', 'France', 'UK')
+
 --- Output 2: Mã đơn hàng, mã khách hàng, tên khách hàng, mã nhân viên bán hàng, tên nhân viên bán hàng, ngày đặt hàng, gửi tới quốc gia nào
+SELECT o.OrderID, c.CustomerID, c.ContactName, e.EmployeeID, e.FirstName ,o.OrderDate, o.ShipCountry
+FROM Customers c JOIN Orders o 
+    ON  c.CustomerID = o.CustomerID
+    JOIN Employees e ON o.EmployeeID = e.EmployeeID
+WHERE ShipCountry IN('USA', 'France', 'UK')
 
 --22. Có tổng cộng bao nhiêu đơn hàng?
+ SELECT COUNT(*) AS [No orders] FROM Orders
 
+SELECT * FROM Orders
 --23. In ra tổng số chi tiết của mỗi đơn hàng (mỗi đơn hàng có bao nhiêu dòng chi tiết)
 --- Output 1: Mã đơn hàng, số lượng chi tiết đơn hàng
+SELECT o.OrderID, COUNT(*) AS [No items]
+FROM Orders o JOIN [Order Details] od
+    ON o.OrderID = od.OrderID
+GROUP BY o.OrderID
 --- Output 2: Mã đơn hàng, mã khách hàng, tên khách hàng, số lượng chi tiết đơn hàng
+SELECT o.OrderID, c.CustomerID, c.CompanyName, COUNT(*) AS [No items]
+FROM [Order Details] od JOIN Orders o
+    ON o.OrderID = od.OrderID JOIN Customers c
+        ON o.CustomerID = c.CustomerID
+GROUP BY o.OrderID, c.CustomerID, c.CompanyName
 
 --24. HẮC NÃO!!!!! - Tính tổng tiền của mỗi đơn hàng (nhớ trừ tiền giảm giá tùy theo từng đơn)
 --- Output 1: mã đơn hàng, tổng tiền (830 dòng) 
+SELECT o.OrderID, SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) AS [Sum sale by group]
+FROM [Order Details] od JOIN Orders o
+    ON od.OrderID = o.OrderID
+GROUP BY o.OrderID
+
 --- Output 2: Mã đơn hàng, mã khách hàng, tên khách hàng, tổng tiền
+SELECT o.OrderID, c.CustomerID, c.ContactName, SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) AS [Sum sale by group]
+FROM [Order Details] od JOIN Orders o
+    ON od.OrderID = o.OrderID JOIN Customers c 
+        ON o.CustomerID = c.CustomerID
+GROUP BY o.OrderID, c.CustomerID, c.ContactName
 
 --25. In ra các đơn hàng có tổng tiền từ 1000$ trở lên
 --- Output 1: mã đơn hàng, tổng tiền
+SELECT o.OrderID, SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) AS [Sum sale by group]
+FROM [Order Details] od JOIN Orders o
+    ON od.OrderID = o.OrderID
+GROUP BY o.OrderID
+HAVING SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) >= 1000
+
 --- Output 2: Mã đơn hàng, mã khách hàng, tên khách hàng, tổng tiền
+SELECT o.OrderID, c.CustomerID, c.ContactName, SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) AS [Sum sale by group]
+FROM [Order Details] od JOIN Orders o
+    ON od.OrderID = o.OrderID JOIN Customers c 
+        ON o.CustomerID = c.CustomerID
+GROUP BY o.OrderID, c.CustomerID, c.ContactName
+HAVING SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) >= 1000
 
 --26. Tính tiền của các đơn hàng gửi tới Mỹ (tính riêng cho từng đơn hàng)
 --- Output: mã đơn hàng, quốc gia, tổng tiền
+SELECT o.OrderID, o.ShipCountry, SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) AS [Sum sale by group]
+FROM [Order Details] od JOIN Orders o
+    ON od.OrderID = o.OrderID
+WHERE o.ShipCountry = 'USA'
+GROUP BY o.OrderID, o.ShipCountry
 
 --27. Tính tổng tiền của tất cả các đơn hàng gửi tới Mỹ (gom tổng)
 --- Output: quốc gia, tổng tiền
+SELECT o.OrderID, SUM([Sum sale by group]) AS [Sum USA's sale]
+FROM(
+SELECT o.OrderID, SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) AS [Sum sale by group]
+FROM [Order Details] od JOIN Orders o
+    ON od.OrderID = o.OrderID
+WHERE o.ShipCountry = 'USA'
+GROUP BY o.OrderID
+) t JOIN Orders o
+    ON t.OrderID = o.OrderID
+GROUP BY o.OrderID
 
 --28. Tính tiền của các đơn hàng gửi tới Anh, Pháp, Mỹ (tính riêng cho từng đơn hàng)
 --- Output: quốc gia, mã đơn hàng, tổng tiền
