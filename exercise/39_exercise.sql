@@ -293,10 +293,9 @@ GROUP BY o.OrderID, c.CustomerID, c.CompanyName
 
 --24. HẮC NÃO!!!!! - Tính tổng tiền của mỗi đơn hàng (nhớ trừ tiền giảm giá tùy theo từng đơn)
 --- Output 1: mã đơn hàng, tổng tiền (830 dòng) 
-SELECT o.OrderID, SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) AS [Sum sale by group]
-FROM [Order Details] od JOIN Orders o
-    ON od.OrderID = o.OrderID
-GROUP BY o.OrderID
+SELECT oD.OrderID, SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) AS [Sum sale by group]
+FROM [Order Details] od 
+GROUP BY od.OrderID
 
 --- Output 2: Mã đơn hàng, mã khách hàng, tên khách hàng, tổng tiền
 SELECT o.OrderID, c.CustomerID, c.ContactName, SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) AS [Sum sale by group]
@@ -307,10 +306,9 @@ GROUP BY o.OrderID, c.CustomerID, c.ContactName
 
 --25. In ra các đơn hàng có tổng tiền từ 1000$ trở lên
 --- Output 1: mã đơn hàng, tổng tiền
-SELECT o.OrderID, SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) AS [Sum sale by group]
-FROM [Order Details] od JOIN Orders o
-    ON od.OrderID = o.OrderID
-GROUP BY o.OrderID
+SELECT od.OrderID, SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) AS [Sum sale by group]
+FROM [Order Details] od
+GROUP BY od.OrderID
 HAVING SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) >= 1000
 
 --- Output 2: Mã đơn hàng, mã khách hàng, tên khách hàng, tổng tiền
@@ -331,53 +329,114 @@ GROUP BY o.OrderID, o.ShipCountry
 
 --27. Tính tổng tiền của tất cả các đơn hàng gửi tới Mỹ (gom tổng)
 --- Output: quốc gia, tổng tiền
-SELECT o.OrderID, SUM([Sum sale by group]) AS [Sum USA's sale]
-FROM(
-SELECT o.OrderID, SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) AS [Sum sale by group]
-FROM [Order Details] od JOIN Orders o
-    ON od.OrderID = o.OrderID
+SELECT 
+    o.ShipCountry, 
+    SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) AS [Total Sales]
+FROM Orders o 
+JOIN [Order Details] od ON o.OrderID = od.OrderID
 WHERE o.ShipCountry = 'USA'
-GROUP BY o.OrderID
-) t JOIN Orders o
-    ON t.OrderID = o.OrderID
-GROUP BY o.OrderID
+GROUP BY o.ShipCountry
 
 --28. Tính tiền của các đơn hàng gửi tới Anh, Pháp, Mỹ (tính riêng cho từng đơn hàng)
 --- Output: quốc gia, mã đơn hàng, tổng tiền
- 
+SELECT 
+    o.ShipCountry, od.OrderID, SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) AS [Total Sales]
+FROM [Order Details] od JOIN Orders o
+    ON od.OrderID = o.OrderID
+WHERE o.ShipCountry IN('USA', 'UK', 'France')
+GROUP BY o.ShipCountry, od.OrderID
+
 --29. Tổng số tiền thu được từ tất cả các đơn hàng là bao nhiêu?
+SELECT SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) AS [Total sales]
+FROM Orders o JOIN [Order Details] od
+    ON o.OrderID = od.OrderID
 
 --30. In ra số lượng đơn hàng của mỗi khách hàng
 --- Output: Mã khách hàng, tên khách hàng, số lượng đơn hàng đã mua
+SELECT c.CustomerID, c.CompanyName, COUNT(*) AS [No orders]
+FROM Customers c JOIN Orders o 
+    ON c.CustomerID = o.CustomerID
+GROUP BY c.CustomerID, c.CompanyName
 
 --31. Khách hàng nào có nhiều đơn hàng nhất?
 --- Output: Mã khách hàng, tên khách hàng, số lượng đơn hàng đã mua
+SELECT c.CustomerID, c.CompanyName, COUNT(*) AS [No orders]
+FROM Customers c JOIN Orders o 
+    ON c.CustomerID = o.CustomerID
+GROUP BY c.CustomerID, c.CompanyName
+HAVING COUNT(*) >= ALL
+                    (
+                        SELECT COUNT(*) AS [No orders]
+                        FROM Customers c JOIN Orders o 
+                            ON c.CustomerID = o.CustomerID
+                        GROUP BY c.CustomerID, c.CompanyName
+                    )
 
 --32. Có bao nhiêu công ty giao hàng?
+SELECT COUNT(*) AS [No ShipCompany] FROM Shippers
 
 --33. In ra số lượng đơn hàng mỗi công ty đã vận chuyển
 --- Output: Mã công ty giao hàng, tên công ty giao hàng, số lượng đơn đã vận chuyển
+SELECT s.ShipperID, s.CompanyName, COUNT(*) AS [No orders]
+FROM Orders o JOIN Shippers s
+    ON o.ShipVia = s.ShipperID
+GROUP BY s.ShipperID, s.CompanyName
 
 --34. Công ty nào vận chuyển nhiều đơn hàng nhất?
 --- Output: Mã công ty giao hàng, tên công ty giao hàng, số lượng đơn đã vận chuyển
+SELECT s.ShipperID, s.CompanyName, COUNT(*) AS [No orders]
+FROM Orders o JOIN Shippers s
+    ON o.ShipVia = s.ShipperID
+GROUP BY s.ShipperID, s.CompanyName
+HAVING COUNT(*) >= ALL 
+                       (
+                            SELECT COUNT(*) AS [No orders]
+                            FROM Orders o JOIN Shippers s
+                                ON o.ShipVia = s.ShipperID
+                            GROUP BY s.ShipperID, s.CompanyName
+                        )
 
 --35. In ra các đơn hàng vận chuyển bởi công ty Speedy Express
 --- Output 1: Mã đơn hàng, ngày đặt hàng, mã công ty giao hàng
+SELECT o.OrderID, o.OrderDate, s.ShipperID
+FROM Orders o JOIN Shippers s
+    ON o.ShipVia = s.ShipperID
+WHERE s.CompanyName = 'Speedy Express' 
 --- Output 2: Mã đơn hàng, ngày đặt hàng, gửi tới quốc gia nào, mã công ty giao hàng, tên công ty giao hàng
+SELECT o.OrderID, o.OrderDate, o.ShipCountry, s.ShipperID, s.CompanyName
+FROM Orders o JOIN Shippers s
+    ON o.ShipVia = s.ShipperID
+WHERE s.CompanyName = 'Speedy Express' 
 
 --36. Công ty Speedy Express đã vận chuyển bao nhiêu đơn hàng 
 --- Output: Mã công ty giao hàng, tên công ty, số lượng đơn đã vận chuyển
-
+SELECT s.ShipperID, s.CompanyName, COUNT(*) AS [No orders]
+FROM Orders o JOIN Shippers s
+    ON o.ShipVia = s.ShipperID
+WHERE s.CompanyName = 'Speedy Express'
+GROUP BY s.ShipperID, s.CompanyName
+SELECT * FROM Shippers
 --37. Thêm công ty giao hàng sau vào database bằng cách chạy lệnh sau
-    
---    INSERT INTO Shippers VALUES('UPS Vietnam', '(+84) 909...')
-    
+INSERT INTO Shippers VALUES('UPS Vietnam', '(+84) 909...')
 --    sau đó in ra số lượng đơn hàng mỗi công ty đã vận chuyển
-
 --- Output: Mã công ty giao hàng, tên công ty giao hàng, số lượng đơn đã vận chuyển
+SELECT s.ShipperID, s.CompanyName, COUNT(o.OrderID) AS [No orders]
+FROM Shippers s LEFT JOIN Orders o
+    ON o.ShipVia = s.ShipperID
+GROUP BY s.ShipperID, s.CompanyName
 
 --38. Tiếp nối câu trên, in ra thông tin vận chuyển hàng của các công ty giao vận, sắp xếp theo mã số công ty giao vận
 --- Output: Mã công ty giao hàng, tên công ty giao hàng, mã đơn hàng, ngày đặt hàng
+SELECT s.ShipperID, s.CompanyName, o.OrderID, o.OrderDate
+FROM Shippers s LEFT JOIN Orders o
+    ON o.ShipVia = s.ShipperID
+GROUP BY s.ShipperID, s.CompanyName, o.OrderID, o.OrderDate
 
 --39. Tiếp nối câu trên, công ty UPS Vietnam vận chuyển những đơn hàng nào?
 --- Output: Mã công ty giao hàng, tên công ty giao hàng, mã đơn hàng, ngày đặt hàng
+SELECT s.ShipperID, s.CompanyName, o.OrderID, o.OrderDate
+FROM Shippers s LEFT JOIN Orders o
+    ON o.ShipVia = s.ShipperID
+WHERE s.CompanyName = 'UPS Vietnam'
+GROUP BY s.ShipperID, s.CompanyName, o.OrderID, o.OrderDate
+-- không vận chuyển đơn hàng nào cả
