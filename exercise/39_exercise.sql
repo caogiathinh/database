@@ -298,7 +298,11 @@ FROM [Order Details] od
 GROUP BY od.OrderID
 
 --- Output 2: Mã đơn hàng, mã khách hàng, tên khách hàng, tổng tiền
-SELECT o.OrderID, c.CustomerID, c.ContactName, SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) AS [Sum sale by group]
+SELECT 
+    o.OrderID, 
+    c.CustomerID, 
+    c.ContactName, 
+    SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) AS [Sum sale by group]
 FROM [Order Details] od JOIN Orders o
     ON od.OrderID = o.OrderID JOIN Customers c 
         ON o.CustomerID = c.CustomerID
