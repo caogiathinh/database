@@ -10,36 +10,36 @@ https://github.com/doit-now/database-craftsman
 
 ### DOWLOAD SQL SERVER
 SQL Server Dowload: https://www.microsoft.com/en-us/sql-server/sql-server-downloads
-![[SQLServer.Express.01.png]]
+![SQLServer.Express.01.png](./SQLServer.Express.01.png)
 
-![[SQLServer.Express.02.png]]
+![SQLServer.Express.02.png](./SQLServer.Express.02.png)
 
-![[SQLServer.Express.03.png]]
+![SQLServer.Express.03.png](./SQLServer.Express.03.png)
 
-![[SQLServer.Express.04.png]]
+![SQLServer.Express.04.png](./SQLServer.Express.04.png)
 
-![[SQLServer.Express.05.png]]
-![[SQLServer.Express.06 1.png]]
+![SQLServer.Express.05.png](./SQLServer.Express.05.png)
+![SQLServer.Express.06 1.png](./SQLServer.Express.06 1.png)
 
-![[SQLServer.Installation.01.png]]
+![SQLServer.Installation.01.png](./SQLServer.Installation.01.png)
 
-![[SQLServer.Installation.02.png]]
+![SQLServer.Installation.02.png](./SQLServer.Installation.02.png)
 
-![[SQLServer.Installation.03.png]]
+![SQLServer.Installation.03.png](./SQLServer.Installation.03.png)
 
-![[SQLServer.Installation.04.png]]
+![SQLServer.Installation.04.png](./SQLServer.Installation.04.png)
 
-![[SQLServer.Installation.05.png]]
+![SQLServer.Installation.05.png](./SQLServer.Installation.05.png)
 
-![[SQLServer.Installation.06.png]]
+![SQLServer.Installation.06.png](./SQLServer.Installation.06.png)
 
-![[SQLServer.Installation.07.png]]
+![SQLServer.Installation.07.png](./SQLServer.Installation.07.png)
 
-![[SQLServer.Installation.08.png]]
+![SQLServer.Installation.08.png](./SQLServer.Installation.08.png)
 
-![[SQLServer.Installation.09.png]]
+![SQLServer.Installation.09.png](./SQLServer.Installation.09.png)
 
-![[SQLServer.Installation.10.png]]
+![SQLServer.Installation.10.png](./SQLServer.Installation.10.png)
 
 #### Cách xem hệ thống server đang hoạt động: 
 Window + R -> services.msc
@@ -72,24 +72,23 @@ object data type
 
 Student                                 binh             =                   new Student(..............); 
 C:\Program Files/.....
-					sqlsrv.exe                     -> đi vào RAM chờ ai đó yêu cầu xử lí data
-									   -> INSTANCE là server nằm trong ram/đoạn code binary và được đặt 1 cái tên.
-C:\Program Files\Microsoft SQL Server\MSSQL16.THINH\MSSQL\Binn								
+			sqlsrv.exe                     -> đi vào RAM chờ ai đó yêu cầu xử lí data
+							-> INSTANCE là server nằm trong ram/đoạn code binary và được đặt 1 cái tên.
+C:\Program Files\Microsoft SQL Server\MSSQL16.THINH\MSSQL\Binn					
 
 Window có 1 Data nội bộ (đạng cây phân cấp) quản lí thông số máy, các app cài vào -> REGISTRY
-	![[registry.png]]
+	![registry.png](./registry.png)
 ### DOWLOAD SSMS (client tool)
 https://learn.microsoft.com/en-us/ssms/install/install
 
-![[SSMS.Installation.01.png]]
+![SSMS.Installation.01.png](./SSMS.Installation.01.png)
 
-![[SSMS.Installation.02.png]]
+![SSMS.Installation.02.png](./SSMS.Installation.02.png)
 
-![[SSMS.Installation.03.png]]
+![SSMS.Installation.03.png](./SSMS.Installation.03.png)
 
-![[SSMS.Installation.04.png]]
+![SSMS.Installation.04.png](./SSMS.Installation.04.png)
 
-![[SSMS.Installation.05.png]]
+![SSMS.Installation.05.png](./SSMS.Installation.05.png)
 
-![[SSMS.Installation.06.png]]
-
+![SSMS.Installation.06.png](./SSMS.Installation.06.png)
